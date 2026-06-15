@@ -3,15 +3,17 @@ const { successResponse, errorResponse } = require("../utils/response");
 
 const register = async (req, res) => {
   try {
-    const user = await authService.registerUser(req.body);
-
-    return successResponse(res, "Register successful", user, 201);
+    const { password, id, ...userData } = await authService.registerUser(
+      req.body,
+    );
+    return successResponse(res, "Register successful", userData, 201);
   } catch (error) {
     return errorResponse(res, error.message, 400);
   }
 };
 
 const login = async (req, res) => {
+  console.log("Received login request with body:", req.body);
   console.log("Login request body:", req.body);
   try {
     const result = await authService.loginUser(req.body);
