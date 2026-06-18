@@ -2,6 +2,9 @@
 import { reactive } from "vue";
 import ResumeForm from "../../components/resume/ResumeForm.vue";
 import { useResumeStore } from "../../stores/resume.store";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const resumeStore = useResumeStore();
 
@@ -20,7 +23,7 @@ const resume = reactive({
 const saveResume = async (resume) => {
     try {
         await resumeStore.createResume(resume);
-
+        toast.success("Resume created successfully!");
     } catch (error) {
         console.error(error);
     }

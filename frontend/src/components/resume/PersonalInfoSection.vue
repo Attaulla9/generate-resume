@@ -1,9 +1,9 @@
 <template>
     <div class="bg-white rounded-xl shadow p-6">
-
+        <!-- 
         <h2 class="text-2xl font-semibold mb-6">
             Personal Information
-        </h2>
+        </h2> -->
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
