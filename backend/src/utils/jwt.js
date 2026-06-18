@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const generateAccessToken = (user) => {
-  console.log(process.env.JWT_SECRET);
-  console.log(process.env.JWT_REFRESH_SECRET);
   return jwt.sign(
     {
       id: user.id,

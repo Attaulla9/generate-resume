@@ -13,8 +13,6 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  console.log("Received login request with body:", req.body);
-  console.log("Login request body:", req.body);
   try {
     const result = await authService.loginUser(req.body);
 

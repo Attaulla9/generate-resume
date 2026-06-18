@@ -2,8 +2,7 @@ const resumeRepository = require("../repositories/resume.repository");
 
 const createResume = async (userId, resumeData) => {
   return await resumeRepository.createResume({
-    title: resumeData.title,
-    summary: resumeData.summary,
+    ...resumeData,
     userId,
   });
 };
@@ -26,7 +25,6 @@ const getResumeById = async (resumeId, userId) => {
 const updateResume = async (resumeId, resumeData, userId) => {
   const resume = await resumeRepository.getResumeById(resumeId);
 
-  console.log("Fetched resume:", resumeData, resume);
   if (!resume) {
     throw new Error("Resume not found");
   }

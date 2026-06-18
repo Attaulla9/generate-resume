@@ -2,7 +2,6 @@ import api from "../api/axios";
 
 // Login
 const loginUser = async (loginData) => {
-  console.log("Login data:", loginData);
   const response = await api.post("/auth/login", loginData);
   return response.data;
 };

@@ -16,7 +16,7 @@ export const useAuthStore = defineStore("auth", {
     async login(loginData) {
       try {
         const response = await authService.loginUser(loginData);
-        console.log("Login response:", response);
+
         this.user = response.data.user;
         this.accessToken = response.data.accessToken;
         this.refreshToken = response.data.refreshToken;

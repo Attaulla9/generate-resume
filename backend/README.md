@@ -437,3 +437,15 @@ certificateUrl String?
 resumeId String
 resume Resume @relation(fields: [resumeId], references: [id])
 }
+
++---------------------------------------------------+
+| Resume Builder Profile 🔔 |
++-----------+---------------------------------------+
+| | |
+| Dashboard | Welcome Attaulla |
+| My Resume | |
+| Create | Recent Resumes |
+| Profile | |
+| Logout | |
+| | |
++-----------+---------------------------------------+

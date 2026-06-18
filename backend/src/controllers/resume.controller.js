@@ -25,6 +25,7 @@ const getById = async (req, res) => {
       req.params.id,
       req.user.id,
     );
+
     return successResponse(res, "Resume fetched successfully", resume);
   } catch (error) {
     return errorResponse(res, error.message, 400);
@@ -45,9 +46,13 @@ const update = async (req, res) => {
 
 const deleteResume = async (req, res) => {
   try {
-    await resumeService.deleteResume(req.params.id, req.user.id);
+    const id = req.params.id;
+
+    await resumeService.deleteResume(id, req.user.id);
+
     return successResponse(res, "Resume deleted successfully", null);
   } catch (error) {
+    console.log(error);
     return errorResponse(res, error.message, 400);
   }
 };

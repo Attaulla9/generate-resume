@@ -79,3 +79,140 @@ Refresh Token Integration
 
 Phase 13
 Deployment
+
+src/
+
+api/
+axios.js
+
+assets/
+
+components/
+auth/
+AuthCard.vue
+
+    common/
+        BaseButton.vue
+        BaseInput.vue
+        BaseModal.vue
+
+    layout/
+        Navbar.vue
+        Sidebar.vue
+
+layouts/
+DashboardLayout.vue
+
+router/
+index.js
+
+services/
+auth.service.js
+resume.service.js
+
+stores/
+auth.store.js
+resume.store.js
+
+views/
+
+    auth/
+        LoginView.vue
+        RegisterView.vue
+
+    dashboard/
+        DashboardView.vue
+
+    resume/
+        ResumeListView.vue
+        ResumeCreateView.vue
+        ResumeEditView.vue
+
+    profile/
+        ProfileView.vue
+
+---
+
+Resume Title
+
+## Basic Information
+
+Full Name
+
+Email
+
+Phone
+
+Address
+
+LinkedIn
+
+GitHub
+
+Portfolio
+
+---
+
+Professional Summary
+
+---
+
+Experience
+
+- Add Experience
+
+---
+
+Education
+
+- Add Education
+
+---
+
+Skills
+
+- Add Skill
+
+---
+
+Projects
+
+- Add Project
+
+---
+
+Certifications
+
+- Add Certification
+
+---
+
+            Save Resume
+
+---
+
+Step 1: PersonalInfoSection.vue
+
+This should contain:
+
+---
+
+Personal Information
+
+Resume Title
+
+Full Name
+
+Email
+
+Phone
+
+Address
+
+LinkedIn
+
+GitHub
+
+Portfolio
+
+---

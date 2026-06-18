@@ -2,7 +2,66 @@ const prisma = require("../config/prisma");
 
 const createResume = async (resumeData) => {
   return await prisma.resume.create({
-    data: resumeData,
+    data: {
+      title: resumeData.title,
+      summary: resumeData.summary,
+      userId: resumeData.userId,
+
+      personalInfo: resumeData.personalInfo
+        ? {
+            create: resumeData.personalInfo,
+          }
+        : undefined,
+
+      experiences: {
+        create:
+          resumeData.experiences?.map((exp) => ({
+            company: exp.company,
+            title: exp.title,
+            startDate: exp.startDate ? new Date(exp.startDate) : null,
+            endDate: exp.endDate ? new Date(exp.endDate) : null,
+            description: exp.description,
+          })) || [],
+      },
+
+      educations: {
+        create:
+          resumeData.educations?.map((edu) => ({
+            institution: edu.institution,
+            degree: edu.degree,
+            startDate: edu.startDate ? new Date(edu.startDate) : null,
+            endDate: edu.endDate ? new Date(edu.endDate) : null,
+            description: edu.description,
+          })) || [],
+      },
+
+      skills: {
+        create: resumeData.skills || [],
+      },
+
+      projects: {
+        create: resumeData.projects || [],
+      },
+
+      certifications: {
+        create:
+          resumeData.certifications?.map((cert) => ({
+            name: cert.name,
+            issuer: cert.issuer,
+            issueDate: cert.issueDate ? new Date(cert.issueDate) : null,
+            certificateUrl: cert.certificateUrl,
+          })) || [],
+      },
+    },
+
+    include: {
+      personalInfo: true,
+      experiences: true,
+      educations: true,
+      skills: true,
+      projects: true,
+      certifications: true,
+    },
   });
 };
 
@@ -22,6 +81,14 @@ const getResumeById = async (resumeId) => {
     where: {
       id: resumeId,
     },
+    include: {
+      personalInfo: true,
+      experiences: true,
+      educations: true,
+      skills: true,
+      projects: true,
+      certifications: true,
+    },
   });
 };
 
@@ -39,6 +106,11 @@ const resumeUpdate = async (resumeId, resumeData) => {
     // Update Skills
     if (resumeData.skills !== undefined) {
       await syncSkills(tx, resumeId, resumeData.skills);
+    }
+
+    // Update PersonleINfo
+    if (resumeData.personalInfo !== undefined) {
+      await syncPersonalInfo(tx, resumeId, resumeData.personalInfo);
     }
 
     // Update Experiences
@@ -66,16 +138,12 @@ const resumeUpdate = async (resumeId, resumeData) => {
       where: {
         id: resumeId,
       },
-
       include: {
-        skills: true,
-
+        personalInfo: true,
         experiences: true,
-
         educations: true,
-
+        skills: true,
         projects: true,
-
         certifications: true,
       },
     });
@@ -104,6 +172,30 @@ const updateResumeInfo = async (tx, resumeId, resumeData) => {
     },
     data,
   });
+};
+
+const syncPersonalInfo = async (tx, resumeId, personalInfo) => {
+  const existing = await tx.personalInfo.findUnique({
+    where: {
+      resumeId,
+    },
+  });
+
+  if (existing) {
+    await tx.personalInfo.update({
+      where: {
+        resumeId,
+      },
+      data: personalInfo,
+    });
+  } else {
+    await tx.personalInfo.create({
+      data: {
+        ...personalInfo,
+        resumeId,
+      },
+    });
+  }
 };
 
 const syncSkills = async (tx, resumeId, skills) => {
@@ -164,7 +256,7 @@ const syncExperiences = async (tx, resumeId, experiences) => {
     },
   });
 
-  const existingIds = existingExperiences.map((item) => item.id);
+  const existingIds = existingExperiences.map((experience) => experience.id);
 
   const incomingIds = experiences
     .filter((item) => item.id)
@@ -382,4 +474,5 @@ module.exports = {
   syncEducations,
   syncProjects,
   syncCertifications,
+  syncPersonalInfo,
 };

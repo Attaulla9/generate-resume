@@ -1,3 +1,39 @@
+<script setup>
+import { reactive } from "vue";
+import ResumeForm from "../../components/resume/ResumeForm.vue";
+import { useResumeStore } from "../../stores/resume.store";
+
+const resumeStore = useResumeStore();
+
+const resume = reactive({
+    title: "",
+    summary: "",
+    personalInfo: {},
+
+    experiences: [],
+    educations: [],
+    skills: [],
+    projects: [],
+    certifications: [],
+});
+
+const saveResume = async (resume) => {
+    try {
+        await resumeStore.createResume(resume);
+
+    } catch (error) {
+        console.error(error);
+    }
+};
+</script>
+
 <template>
-    <h1>Create Resume</h1>
+    <div>
+        <h1 class="text-3xl font-bold mb-6">
+            Create Resume
+        </h1>
+
+        <ResumeForm :resume="resume" @save="saveResume" />
+    </div>
+
 </template>
